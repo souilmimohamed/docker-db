@@ -2,13 +2,16 @@ services:
   mssql:
     container_name: sql-server
     user: root
-    image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+    image: mcr.microsoft.com/mssql/server
     restart: always
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Password_123#"
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=Password_123#"
+      - "MSSQL_PID=Developer"
     ports:
       - 1433:1433
     volumes:
-      - ~/docker/sql/mssql/:/var/opt/mssql/
-      - ~/docker/sql/sqlserver/:/var/opt/sqlserver/
+      - data:/var/opt/mssql
+volumes:
+  data:
+    driver: local
